@@ -1,3 +1,5 @@
+import Product from "../models/product.model.js";
+
 // Add item to cart
 export const addToCart = async (req, res) => {
     try {
@@ -74,5 +76,26 @@ export const updateQuantity = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Error updating product quantity" });
+    }
+};
+
+// Get cart products
+export const getCartProducts = async (req, res) => {
+    try {
+        // Find all products by their IDs stored in the user's cart
+        const productIds = req.user.CartItems.map(item => item.id);
+        const products = await Product.find({ _id: { $in: productIds } });
+
+        // Map over the products and add the quantity from the user's cart
+        const cartItems = products.map(product => {
+            const item = req.user.CartItems.find(cartItem => cartItem.id === product._id.toString());
+            return { ...product.toJSON(), quantity: item ? item.quantity : 0 };
+        });
+
+        // Return the cart items with product details and quantities
+        res.json({ cartItems });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error fetching cart products" });
     }
 };
