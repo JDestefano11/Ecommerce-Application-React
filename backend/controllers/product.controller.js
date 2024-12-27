@@ -130,3 +130,38 @@ export const getProductsByCategory = async (req, res) => {
         res.status(500).json({ message: "Error getting products by category" });
     }
 };
+
+// Transition featured product
+export const transitionFeaturedProduct = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if (product) {
+            // Toggle the isFeatured flag
+            product.isFeatured = !product.isFeatured;
+            const updatedProduct = await product.save();
+
+            // Update the Redis cache after updating the product
+            await updateFeaturedProductCache();
+
+            res.json(updatedProduct);
+        } else {
+            res.status(404).json({ message: "Product not found" });
+        }
+    } catch (error) {
+        console.error("Error details:", error.message);
+        res.status(500).json({ message: "Error updating product" });
+    }
+};
+
+// Update featured product cache in Redis
+async function updateFeaturedProductCache() {
+    try {
+        // Fetch the latest featured products from the database
+        const featuredProducts = await Product.find({ isFeatured: true }).lean();
+
+        // Store the latest featured products in Redis
+        await redis.set("featuredProducts", JSON.stringify(featuredProducts));
+    } catch (error) {
+        console.error("Error updating featured product cache:", error.message);
+    }
+}
