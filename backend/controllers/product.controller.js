@@ -118,3 +118,15 @@ export const getRecommendedProducts = async (req, res) => {
         res.status(500).json({ message: "Error getting recommended products" });
     }
 };
+
+// Get products by category
+export const getProductsByCategory = async (req, res) => {
+    const { category } = req.params;
+    try {
+        const products = await Product.find({ category });
+        res.json({ products });
+    } catch (error) {
+        console.error("Error details:", error.message);
+        res.status(500).json({ message: "Error getting products by category" });
+    }
+};
