@@ -43,23 +43,26 @@ export const createProduct = async (req, res) => {
 
         let cloudinaryResponse = null;
 
+        // Upload the image if it's provided
         if (image) {
-            await cloudinary.uploader.upload(image, { folder: "products" })
+            cloudinaryResponse = await cloudinary.uploader.upload(image, { folder: "products" });
         }
+
         const product = await Product.create({
             name,
             description,
             price,
-            image: cloudinaryResponse?.secure_url ? cloudinaryResponse.secure_url : "",
+            image: cloudinaryResponse ? cloudinaryResponse.secure_url : "",
             category
-        })
+        });
+
         res.status(201).json({ product });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error creating product", error: error.message });
-
     }
 };
+
 // Delete Product 
 export const deleteProduct = async (req, res) => {
     try {
@@ -69,6 +72,7 @@ export const deleteProduct = async (req, res) => {
             return res.status(404).json({ message: "Product not found" });
         }
 
+        // Delete the image from Cloudinary if it exists
         if (product.image) {
             const publicId = product.image.split("/").pop().split(".")[0];
             try {
@@ -77,16 +81,40 @@ export const deleteProduct = async (req, res) => {
             } catch (error) {
                 console.error(error);
             }
-
         }
+
         const deletedProduct = await Product.findByIdAndDelete(req.params.id);
         if (!deletedProduct) {
             return res.status(404).json({ message: "Product not found" });
         }
+
         res.status(200).json({ message: "Product deleted successfully" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error deleting product", error: error.message });
-
     }
-}
+};
+
+// Get Recommended Products
+export const getRecommendedProducts = async (req, res) => {
+    try {
+        const products = await Product.aggregate([
+            {
+                $sample: { size: 3 } // Randomly sample 3 products
+            },
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    image: 1,
+                    price: 1,
+                    description: 1
+                }
+            }
+        ]);
+        res.json({ products });
+    } catch (error) {
+        console.error("Error details:", error.message);
+        res.status(500).json({ message: "Error getting recommended products" });
+    }
+};
