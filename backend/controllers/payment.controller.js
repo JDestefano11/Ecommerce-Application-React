@@ -1,3 +1,8 @@
+import Coupon from "../models/coupon.model.js";
+import { stripe } from "../lib/stripe.js";
+import Order from "../models/order.model.js";
+
+
 export const createCheckoutSession = async (req, res) => {
     async (req, res) => {
         try {
@@ -48,6 +53,13 @@ export const createCheckoutSession = async (req, res) => {
                 metaData: {
                     userId: req.user._id.toString(),
                     couponCode: couponCode || "",
+                    products: JSON.stringify(
+                        products.map((p) => ({
+                            id: p._id,
+                            quantity: p.quantity,
+                            price: p.price,
+                        }))
+                    ),
                 },
             });
 
@@ -65,6 +77,53 @@ export const createCheckoutSession = async (req, res) => {
         }
     };
 }
+
+export const checkOutSuccess = async (req, res) => {
+    try {
+        const { sessionId } = req.body;
+        const session = await Stripe.checkout.sessions.retrieve(sessionId);
+
+        if (session.payment_status === "paid") {
+            // If the payment is successful and a coupon code was used, deactivate the coupon
+            if (session.metaData.couponCode) {
+                await Coupon.findOneAndUpdate({
+                    code: session.metaData.couponCode,
+                    userId: session.metaData.userId,
+                }, {
+                    isActive: false,
+                });
+            }
+        }
+        res.status(200).json({ message: "Payment successful and coupon deactivated" });
+
+        // Create a new order
+        const products = JSON.parse(session.metaData.products);
+        const newOrder = new Order({
+            user: session.metaData.userId,
+            products: products.map(product => ({
+                product: product.id,
+                quantity: product.quantity,
+                price: product.price,
+            })),
+            totalAmount: session.amount_total / 100,
+            stripeSessionId: sessionId,
+        });
+
+        await newOrder.save();
+
+        // Fixed the syntax error in this response (missing method)
+        res.status(200).json({
+            success: true,
+            message: "Payment successful, order created and coupon is deactivated",
+            orderId: newOrder._id,
+        });
+
+    } catch (error) {
+        console.error("Error retrieving checkout session:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
 
 async function createStripeCoupon(discountPercentage) {
     const coupon = await stripe.coupons.create({
