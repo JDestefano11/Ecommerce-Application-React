@@ -142,9 +142,10 @@
   .navbar-right {
     display: none;
   }
-
   .mobile-icons {
     display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 }
 
@@ -155,39 +156,33 @@
     padding: 1rem 3rem;
     max-width: 100%;
   }
-
   .navbar-brand {
     font-size: 1.8rem;
     color: #ff6b35;
     text-decoration: none;
     margin-right: auto;
   }
-
   .navbar-center {
     display: flex;
     gap: 3rem;
     flex-grow: 1;
     justify-content: center;
   }
-
   .navbar-link {
     font-size: 1.3rem;
     color: #f0f0f0;
     text-decoration: none;
     transition: color 0.3s;
   }
-
   .navbar-link:hover {
     color: #ffd700;
   }
-
   .navbar-right {
     display: flex;
     gap: 2rem;
     align-items: center;
     justify-content: flex-end;
   }
-
   .navbar-button {
     background-color: rgba(218, 165, 32, 0.9);
     color: #f0f0f0;
@@ -198,17 +193,14 @@
     cursor: pointer;
     transition: background-color 0.3s;
   }
-
   .navbar-button:hover {
     background-color: rgba(184, 134, 11, 0.9);
   }
-
   .cart-link {
     font-size: 1.5rem;
     position: relative;
     color: #daa520;
   }
-
   .cart-badge {
     position: absolute;
     top: -6px;
@@ -220,11 +212,9 @@
     font-size: 0.9rem;
     font-weight: bold;
   }
-
   .navbar-container {
     padding: 1.5rem 0;
   }
-
   .mobile-icons {
     display: none;
   }
