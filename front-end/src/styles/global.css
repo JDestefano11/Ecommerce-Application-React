@@ -30,9 +30,9 @@ body {
   height: 100%;
   background: radial-gradient(
     circle at center,
-    rgba(10, 186, 181, 0.6) 0%,
-    /* Teal (Professional and calming) */ rgba(52, 73, 94, 0.9) 50%,
-    /* Deep Gray-Blue (Cool and modern) */ rgba(44, 62, 80, 1) 100%
-      /* Charcoal Gray (Elegant and grounded) */
+    rgba(127, 219, 182, 0.6) 0%,
+    rgba(10, 61, 98, 0.9) 50%,
+    rgba(10, 61, 98, 1) 100%
   );
+  z-index: 1;
 }
