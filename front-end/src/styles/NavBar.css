@@ -9,17 +9,20 @@ body {
 
 .navbar-container {
   background: linear-gradient(
-    to bottom,
-    rgba(18, 18, 18, 0.95),
-    rgba(18, 18, 18, 0.85)
+    to right,
+    rgba(18, 18, 18, 0.8) 0%,
+    rgba(31, 31, 31, 0.7) 50%,
+    rgba(18, 18, 18, 0.8) 100%
   );
   color: #e0e0e0;
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  padding: 1rem 0;
+  backdrop-filter: blur(12px);
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(187, 134, 252, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-wrapper {
@@ -51,6 +54,23 @@ body {
   text-decoration: none;
   font-size: 1.1rem;
   transition: color 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(45deg, #bb86fc, #03dac6);
+  transition: width 0.3s ease;
+}
+
+.navbar-link:hover::after {
+  width: 100%;
 }
 
 .navbar-link:hover {
@@ -64,24 +84,30 @@ body {
 }
 
 .navbar-button {
-  background-color: #6200ee;
+  background: linear-gradient(45deg, #6200ee, #3700b3);
   color: #ffffff;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   padding: 0.6rem 1.2rem;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .navbar-button:hover {
-  background-color: #3700b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(98, 0, 238, 0.3);
 }
 
 .cart-link {
   position: relative;
   font-size: 1.2rem;
   color: #03dac6;
+  transition: transform 0.3s ease;
+}
+
+.cart-link:hover {
+  transform: scale(1.1);
 }
 
 .cart-badge {
@@ -209,10 +235,6 @@ body {
     transition: color 0.3s;
   }
 
-  .navbar-link:hover {
-    color: #03dac6;
-  }
-
   .navbar-right {
     display: flex;
     gap: 2rem;
@@ -221,36 +243,20 @@ body {
   }
 
   .navbar-button {
-    background-color: #6200ee;
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
     padding: 0.8rem 2rem;
     font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .navbar-button:hover {
-    background-color: #3700b3;
+    border-radius: 6px;
   }
 
   .cart-link {
     font-size: 1.5rem;
-    position: relative;
-    color: #03dac6;
   }
 
   .cart-badge {
-    position: absolute;
     top: -6px;
     right: -10px;
-    background-color: #bb86fc;
-    color: #121212;
-    border-radius: 50%;
     padding: 4px 8px;
     font-size: 0.9rem;
-    font-weight: bold;
   }
 
   .navbar-container {
