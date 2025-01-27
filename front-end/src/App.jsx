@@ -1,10 +1,11 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import SignUp from './pages/Signup';
-import Login from './pages/Login';
-import NavBar from './components/Navbar';
-import './styles/global.css';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import SignUp from "./pages/Signup";
+import Login from "./pages/Login";
+import NavBar from "./components/Navbar";
+import "./styles/global.css";
+import Hero from "./components/Hero";
 
 const App = () => {
   return (
@@ -18,14 +19,15 @@ const App = () => {
       </div>
 
       <NavBar />
+      <Hero />
 
       <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/login' element={<Login />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
