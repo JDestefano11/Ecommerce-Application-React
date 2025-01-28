@@ -53,12 +53,3 @@ html {
     font-size: 16px;
   }
 }
-
-.overlay {
-  background: linear-gradient(
-    45deg,
-    rgba(187, 134, 252, 0.03),
-    rgba(3, 218, 198, 0.03)
-  );
-  mix-blend-mode: overlay;
-}

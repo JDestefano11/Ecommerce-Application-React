@@ -19,33 +19,39 @@
   border: 1px solid #bb86fc50;
   padding: 8px 16px;
   border-radius: 50px;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
   display: inline-block;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  font-size: clamp(0.9rem, 1.1vw, 1.2rem);
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
 }
 
 .hero-title {
-  font-size: 4.5rem;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  color: #ffffff;
+  font-size: clamp(4rem, 8vw, 6.5rem);
+  line-height: 1.05;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.8));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .accent-text {
-  background: linear-gradient(45deg, #bb86fc, #03dac6);
+  background: linear-gradient(45deg, #bb86fc, #03dac6, #bb86fc);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  position: relative;
+  animation: gradientFlow 8s linear infinite;
 }
 
 .hero-description {
-  font-size: 1.2rem;
-  color: #a0a0a0;
-  max-width: 500px;
-  margin-bottom: 3rem;
+  font-size: clamp(1.2rem, 1.5vw, 1.6rem);
+  line-height: 1.7;
+  letter-spacing: 0.2px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
 }
-
 .cta-group {
   display: flex;
   gap: 20px;
@@ -58,12 +64,14 @@
   padding: 15px 35px;
   border-radius: 12px;
   color: white;
-  font-size: 1.1rem;
   display: flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
   transition: transform 0.3s ease;
+  font-size: clamp(1.1rem, 1.2vw, 1.3rem);
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
 .cta-secondary {
@@ -72,9 +80,11 @@
   padding: 15px 35px;
   border-radius: 12px;
   color: #03dac6;
-  font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: clamp(1.1rem, 1.2vw, 1.3rem);
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
 .arrow {
@@ -142,8 +152,9 @@
 }
 
 .stat-value {
-  font-size: 2.5rem;
-  font-weight: bold;
+  font-size: clamp(2.8rem, 4vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
   background: linear-gradient(45deg, #bb86fc, #03dac6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -151,7 +162,10 @@
 
 .stat-label {
   color: #a0a0a0;
-  font-size: 0.9rem;
+  font-size: clamp(0.9rem, 1vw, 1.1rem);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 @media (max-width: 768px) {
@@ -183,7 +197,7 @@
     padding: 0 8%;
     gap: 120px;
     max-width: 1920px;
-    margin: 180px auto 320px; /* Increased top and bottom margin */
+    margin: 180px auto 320px;
     min-height: 95vh;
   }
 
