@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { FiMail, FiLock } from "react-icons/fi";
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { FiMail, FiLock, FiArrowRight } from "react-icons/fi";
 import "../styles/Login.css";
 
 const Login = () => {
@@ -9,29 +8,35 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
     if (email === "" || password === "") {
       setError("Please fill in all fields");
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+    } else {
+      // Login logic here
       console.log("Login successful");
-    } catch (err) {
-      setError("Authentication failed");
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <div className="login-page">
+      <div className="background-effects">
+        <div className="grid-pattern"></div>
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="particle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 10}s`,
+            }}
+          />
+        ))}
+      </div>
+
       <div className="animated-shapes">
         <div className="floating-circle circle-1"></div>
         <div className="floating-circle circle-2"></div>
@@ -48,10 +53,10 @@ const Login = () => {
               </div>
             </div>
             <h1>Welcome Back</h1>
-            <p className="subtitle">Sign in to continue your journey</p>
+            <p className="subtitle">Sign in to continue</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="login-form">
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <div className="input-wrapper">
                 <FiMail className="input-icon" />
@@ -62,7 +67,6 @@ const Login = () => {
                   placeholder="Email address"
                   required
                 />
-                <div className="input-glow"></div>
               </div>
             </div>
 
@@ -76,7 +80,6 @@ const Login = () => {
                   placeholder="Password"
                   required
                 />
-                <div className="input-glow"></div>
               </div>
             </div>
 
@@ -89,34 +92,19 @@ const Login = () => {
 
             <button type="submit" className="login-button" disabled={isLoading}>
               {isLoading ? (
-                <div className="loader">
-                  <div className="loader-inner"></div>
-                </div>
+                <div className="loader"></div>
               ) : (
-                "Sign In"
+                <>
+                  Sign In
+                  <FiArrowRight />
+                </>
               )}
             </button>
-
-            <div className="social-login">
-              <span className="divider">or continue with</span>
-              <div className="social-buttons">
-                <button type="button" className="social-btn google-btn">
-                  <FcGoogle /> Google
-                </button>
-                <button type="button" className="social-btn github-btn">
-                  <FaGithub /> GitHub
-                </button>
-              </div>
-            </div>
           </form>
 
           <div className="additional-options">
-            <a href="/forgot-password" className="forgot-link">
-              Forgot Password?
-            </a>
-            <a href="/register" className="register-link">
-              Create Account
-            </a>
+            <a href="/forgot-password">Forgot Password?</a>
+            <a href="/signup">Create Account</a>
           </div>
         </div>
       </div>
