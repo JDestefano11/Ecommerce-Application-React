@@ -175,31 +175,99 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-
 @media (max-width: 768px) {
   .hero-container {
     flex-direction: column;
-    padding: 20px;
+    padding: 0;
     text-align: center;
-  }
-
-  .hero-title {
-    font-size: 3rem;
-  }
-
-  .cta-group {
-    justify-content: center;
-  }
-
-  .stats-container {
-    justify-content: center;
+    position: relative;
+    min-height: 85vh;
+    margin-top: 70px;
+    display: flex;
+    justify-content: flex-start;
+    overflow: hidden;
   }
 
   .hero-visual {
-    height: 50vh;
+    position: absolute;
+    top: -70px;
+    left: 0;
+    right: 0;
+    height: 110vh;
     width: 100%;
+    z-index: 0;
+  }
+
+  .hero-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    opacity: 0.65;
+    filter: brightness(0.9) contrast(1.2) saturate(1.05);
+  }
+  .hero-content {
+    margin-top: 40px;
+    padding: 35px 25px;
+  }
+
+  .hero-title {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .cta-group {
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 2.5rem;
+  }
+
+  .geometric-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.9) 85%,
+      rgba(0, 0, 0, 1) 95%
+    );
+    height: 120%;
+  }
+  .stats-container {
+    width: calc(100% - 80px);
+    margin: 20px auto 60px;
+    padding: 30px 25px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+
+  .stat {
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .stat-value {
+    font-size: 2.2rem;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
   }
 }
+
 @media (min-width: 1200px) {
   .hero-container {
     padding: 0 8%;
