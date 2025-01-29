@@ -5,6 +5,7 @@ import SignUp from "./pages/Signup";
 import Login from "./pages/Login";
 import NavBar from "./components/Navbar";
 import "./styles/global.css";
+import Cart from "./pages/Cart";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </BrowserRouter>
   );
