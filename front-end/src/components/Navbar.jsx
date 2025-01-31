@@ -39,7 +39,7 @@ const Navbar = () => {
     <header className={`navbar-container ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-wrapper">
         <Link to="/" className="navbar-brand">
-          NovaCart
+          Fashionista
         </Link>
 
         <div className="navbar-center">
