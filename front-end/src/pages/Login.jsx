@@ -1,111 +1,132 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiMail, FiLock, FiArrowRight } from "react-icons/fi";
+import { FiMail, FiLock, FiLogIn, FiAlertCircle } from "react-icons/fi";
 import "../styles/Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+    if (error) setError(null);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === "" || password === "") {
+    setError(null);
+
+    if (!formData.email || !formData.password) {
       setError("Please fill in all fields");
-    } else {
-      // Login logic here
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      // API call simulation
+      await new Promise(resolve => setTimeout(resolve, 1000));
       console.log("Login successful");
+      navigate("/dashboard");
+    } catch (err) {
+      setError("Invalid email or password");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="login-page">
-      <div className="background-effects">
-        <div className="grid-pattern"></div>
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="particle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 10}s`,
-            }}
-          />
-        ))}
+    <div className="auth-login-wrapper">
+      <div className="auth-background">
+        <div className="auth-gradient-circle auth-circle-1"></div>
+        <div className="auth-gradient-circle auth-circle-2"></div>
+        <div className="auth-gradient-circle auth-circle-3"></div>
+        <div className="auth-grid-overlay"></div>
       </div>
 
-      <div className="animated-shapes">
-        <div className="floating-circle circle-1"></div>
-        <div className="floating-circle circle-2"></div>
-        <div className="floating-circle circle-3"></div>
-      </div>
-
-      <div className="login-container">
-        <div className="glass-effect"></div>
-        <div className="login-content">
-          <div className="login-header">
-            <div className="logo-container">
-              <div className="logo-circle">
-                <div className="logo-inner"></div>
-              </div>
+      <div className="auth-login-container">
+        <div className="auth-glass-effect"></div>
+        <div className="auth-login-content">
+          <div className="auth-brand-header">
+            <div className="auth-logo">
+              <div className="auth-logo-glow"></div>
+              <div className="auth-logo-inner"></div>
             </div>
             <h1>Welcome Back</h1>
-            <p className="subtitle">Sign in to continue</p>
+            <p>Sign in to your account</p>
           </div>
 
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <div className="input-wrapper">
-                <FiMail className="input-icon" />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email address"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="form-group">
-              <div className="input-wrapper">
-                <FiLock className="input-icon" />
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Password"
-                  required
-                />
-              </div>
-            </div>
-
+          <form onSubmit={handleSubmit} className="auth-form">
             {error && (
-              <div className="error-message">
-                <div className="error-icon">!</div>
-                {error}
+              <div className="auth-error">
+                <FiAlertCircle />
+                <span>{error}</span>
               </div>
             )}
 
-            <button type="submit" className="login-button" disabled={isLoading}>
-              {isLoading ? (
-                <div className="loader"></div>
-              ) : (
-                <>
-                  Sign In
-                  <FiArrowRight />
-                </>
-              )}
-            </button>
-          </form>
+            <div className="auth-input-group">
+              <div className="auth-input-wrapper">
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email address"
+                  className="auth-input"
+                  required
+                />
+                <FiMail className="auth-input-icon" />
+              </div>
+            </div>
 
-          <div className="additional-options">
-            <a href="/forgot-password">Forgot Password?</a>
-            <a href="/signup">Create Account</a>
-          </div>
+            <div className="auth-input-group">
+              <div className="auth-input-wrapper">
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Password"
+                  className="auth-input"
+                  required
+                />
+                <FiLock className="auth-input-icon" />
+              </div>
+            </div>
+
+            <div className="auth-actions">
+              <a href="/forgot-password" className="auth-forgot-link">
+                Forgot password?
+              </a>
+
+              <button 
+                type="submit" 
+                className="auth-submit-btn"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="auth-loading">Signing in...</span>
+                ) : (
+                  <>
+                    Sign In
+                    <FiLogIn />
+                  </>
+                )}
+              </button>
+            </div>
+
+            <div className="auth-alternate">
+              Don't have an account?
+              <a href="/signup" className="auth-link">Create Account</a>
+            </div>
+          </form>
         </div>
       </div>
     </div>

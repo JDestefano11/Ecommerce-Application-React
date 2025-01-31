@@ -19,136 +19,147 @@ const Signup = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    // Clear error when user starts typing
     if (error) setError(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    
+
+    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+      setError("Please fill in all fields");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords don't match");
+      setError("Passwords do not match");
       return;
     }
 
     try {
       setIsLoading(true);
-      // Simulate API call
+      // API call simulation
       await new Promise(resolve => setTimeout(resolve, 1000));
-      navigate("/login");
+      console.log("Signup successful");
+      navigate("/dashboard");
     } catch (err) {
-      setError("An error occurred. Please try again.");
+      setError("Failed to create account");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="signup-page">
-      <div className="animated-shapes">
-        <div className="floating-circle circle-1"></div>
-        <div className="floating-circle circle-2"></div>
-        <div className="floating-circle circle-3"></div>
+    <div className="register-container">
+      <div className="register-background">
+        <div className="register-shapes">
+          <div className="register-shape shape-1"></div>
+          <div className="register-shape shape-2"></div>
+          <div className="register-shape shape-3"></div>
+        </div>
+        <div className="register-pattern"></div>
       </div>
 
-      <div className="signup-container">
-        <div className="glass-effect"></div>
-        <div className="signup-content">
-          <div className="signup-header">
-            <div className="logo-container">
-              <div className="logo-circle">
-                <div className="logo-inner"></div>
-              </div>
+      <div className="register-card">
+        <div className="register-glass"></div>
+        <div className="register-content">
+          <div className="register-header">
+            <div className="register-logo">
+              <div className="register-logo-ring"></div>
+              <div className="register-logo-core"></div>
             </div>
             <h1>Create Account</h1>
-            <p className="subtitle">Join our community today</p>
+            <p>Join our community today</p>
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="register-form">
             {error && (
-              <div className="error-message">
+              <div className="register-error">
                 <FiAlertCircle />
-                {error}
+                <span>{error}</span>
               </div>
             )}
 
-            <div className="form-group">
-              <div className="input-wrapper">
+            <div className="register-field">
+              <div className="register-input-container">
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Full Name"
+                  placeholder="Full name"
+                  className="register-input"
                   required
                 />
-                <FiUser className="input-icon" />
+                <FiUser className="register-icon" />
               </div>
             </div>
 
-            <div className="form-group">
-              <div className="input-wrapper">
+            <div className="register-field">
+              <div className="register-input-container">
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email address"
+                  className="register-input"
                   required
                 />
-                <FiMail className="input-icon" />
+                <FiMail className="register-icon" />
               </div>
             </div>
 
-            <div className="form-group">
-              <div className="input-wrapper">
+            <div className="register-field">
+              <div className="register-input-container">
                 <input
                   type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Password"
+                  className="register-input"
                   required
                 />
-                <FiLock className="input-icon" />
+                <FiLock className="register-icon" />
               </div>
             </div>
 
-            <div className="form-group">
-              <div className="input-wrapper">
+            <div className="register-field">
+              <div className="register-input-container">
                 <input
                   type="password"
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  placeholder="Confirm Password"
+                  placeholder="Confirm password"
+                  className="register-input"
                   required
                 />
-                <FiLock className="input-icon" />
+                <FiLock className="register-icon" />
               </div>
             </div>
 
             <button 
               type="submit" 
-              className="signup-button"
+              className="register-button"
               disabled={isLoading}
             >
               {isLoading ? (
-                "Creating Account..."
+                <span className="register-loading">Creating account...</span>
               ) : (
                 <>
-                  Sign Up
-                  <FiArrowRight />
+                  Create Account
+                  <FiArrowRight className="register-button-icon" />
                 </>
               )}
             </button>
-          </form>
 
-          <div className="additional-options">
-            <a href="/login">Already have an account?</a>
-            <a href="/terms">Terms & Privacy</a>
-          </div>
+            <div className="register-footer">
+              <p>Already have an account?</p>
+              <a href="/login" className="register-link">Sign In</a>
+            </div>
+          </form>
         </div>
       </div>
     </div>
