@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiMail, FiLock, FiUser, FiArrowRight } from "react-icons/fi";
+import { FiMail, FiLock, FiUser, FiArrowRight, FiAlertCircle } from "react-icons/fi";
 import "../styles/Signup.css";
 
 const Signup = () => {
@@ -19,15 +19,29 @@ const Signup = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    // Clear error when user starts typing
+    if (error) setError(null);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords don't match");
       return;
     }
-    navigate("/login");
+
+    try {
+      setIsLoading(true);
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      navigate("/login");
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -52,9 +66,15 @@ const Signup = () => {
           </div>
 
           <form onSubmit={handleSubmit}>
+            {error && (
+              <div className="error-message">
+                <FiAlertCircle />
+                {error}
+              </div>
+            )}
+
             <div className="form-group">
               <div className="input-wrapper">
-                <FiUser className="input-icon" />
                 <input
                   type="text"
                   name="name"
@@ -63,12 +83,12 @@ const Signup = () => {
                   placeholder="Full Name"
                   required
                 />
+                <FiUser className="input-icon" />
               </div>
             </div>
 
             <div className="form-group">
               <div className="input-wrapper">
-                <FiMail className="input-icon" />
                 <input
                   type="email"
                   name="email"
@@ -77,12 +97,12 @@ const Signup = () => {
                   placeholder="Email address"
                   required
                 />
+                <FiMail className="input-icon" />
               </div>
             </div>
 
             <div className="form-group">
               <div className="input-wrapper">
-                <FiLock className="input-icon" />
                 <input
                   type="password"
                   name="password"
@@ -91,12 +111,12 @@ const Signup = () => {
                   placeholder="Password"
                   required
                 />
+                <FiLock className="input-icon" />
               </div>
             </div>
 
             <div className="form-group">
               <div className="input-wrapper">
-                <FiLock className="input-icon" />
                 <input
                   type="password"
                   name="confirmPassword"
@@ -105,26 +125,20 @@ const Signup = () => {
                   placeholder="Confirm Password"
                   required
                 />
+                <FiLock className="input-icon" />
               </div>
             </div>
 
-            {error && (
-              <div className="error-message">
-                <div className="error-icon">!</div>
-                {error}
-              </div>
-            )}
-
-            <button
-              type="submit"
+            <button 
+              type="submit" 
               className="signup-button"
               disabled={isLoading}
             >
               {isLoading ? (
-                <div className="loader"></div>
+                "Creating Account..."
               ) : (
                 <>
-                  Create Account
+                  Sign Up
                   <FiArrowRight />
                 </>
               )}

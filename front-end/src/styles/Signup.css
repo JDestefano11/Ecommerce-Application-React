@@ -22,48 +22,79 @@
   margin-top: 60px;
 }
 
-/* Background Animation Shapes */
+/* Background Animation */
 .animated-shapes {
   position: fixed;
   inset: 0;
   z-index: 0;
+  background: linear-gradient(125deg, var(--background), #000000);
   overflow: hidden;
 }
 
-.floating-circle {
+.animated-shapes::before {
+  content: '';
   position: absolute;
-  border-radius: 50%;
-  background: linear-gradient(45deg, var(--primary), var(--secondary));
-  opacity: 0.1;
-  filter: blur(60px);
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: 
+    repeating-linear-gradient(
+      transparent 0%,
+      transparent 49%,
+      rgba(187, 134, 252, 0.05) 50%,
+      transparent 51%,
+      transparent 100%
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0%,
+      transparent 49%,
+      rgba(3, 218, 198, 0.05) 50%,
+      transparent 51%,
+      transparent 100%
+    );
+  background-size: 60px 60px;
+  animation: meshMove 15s linear infinite;
+  opacity: 0.5;
 }
 
-.circle-1 {
-  width: 800px;
-  height: 800px;
-  top: -400px;
-  right: -200px;
-  animation: float 20s infinite;
-  transform-origin: center;
+.animated-shapes::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(187, 134, 252, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(3, 218, 198, 0.15) 0%, transparent 50%);
+  filter: blur(80px);
+  animation: glowPulse 8s ease-in-out infinite alternate;
 }
 
-.circle-2 {
-  width: 600px;
-  height: 600px;
-  bottom: -300px;
-  left: -100px;
-  animation: float 15s infinite reverse;
+@keyframes meshMove {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(-60px, -60px) rotate(1deg);
+  }
 }
 
-.circle-3 {
-  width: 400px;
-  height: 400px;
-  top: 40%;
-  left: 30%;
-  animation: float 18s infinite;
+@keyframes glowPulse {
+  0% {
+    opacity: 0.5;
+    filter: blur(80px);
+  }
+  50% {
+    opacity: 0.7;
+    filter: blur(100px);
+  }
+  100% {
+    opacity: 0.5;
+    filter: blur(80px);
+  }
 }
 
-/* Form Container */
+/* Container Enhancement */
 .signup-container {
   width: 100%;
   max-width: 520px;
@@ -71,8 +102,14 @@
   z-index: 1;
   padding: 3px;
   border-radius: 30px;
-  background: linear-gradient(45deg, rgba(187, 134, 252, 0.4), rgba(3, 218, 198, 0.4));
-  box-shadow: 0 0 60px rgba(187, 134, 252, 0.3);
+  background: linear-gradient(
+    165deg,
+    rgba(187, 134, 252, 0.2),
+    rgba(3, 218, 198, 0.2)
+  );
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   animation: containerReveal 0.6s ease-out;
 }
@@ -80,10 +117,11 @@
 .glass-effect {
   position: absolute;
   inset: 1px;
-  background: rgba(30, 30, 30, 0.95);
+  background: rgba(30, 30, 30, 0.8);
   backdrop-filter: blur(20px);
   border-radius: 28px;
   z-index: -1;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .signup-content {
@@ -126,7 +164,7 @@
 }
 
 .logo-inner::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -2px;
   border-radius: 50%;
@@ -256,7 +294,7 @@ input:focus + .input-icon {
 }
 
 .signup-button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -302,7 +340,7 @@ input:focus + .input-icon {
 }
 
 .additional-options a::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -325,7 +363,8 @@ input:focus + .input-icon {
 
 /* Animations */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0) rotate(0deg);
   }
   25% {
@@ -340,7 +379,8 @@ input:focus + .input-icon {
 }
 
 @keyframes iconFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(45deg) translateY(0);
   }
   50% {
@@ -360,14 +400,29 @@ input:focus + .input-icon {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes shake {
-  10%, 90% { transform: translateX(-1px); }
-  20%, 80% { transform: translateX(2px); }
-  30%, 50%, 70% { transform: translateX(-4px); }
-  40%, 60% { transform: translateX(4px); }
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-4px);
+  }
+  40%,
+  60% {
+    transform: translateX(4px);
+  }
 }
 
 /* Responsive Styles */
@@ -398,19 +453,12 @@ input:focus + .input-icon {
   form {
     max-width: 450px;
   }
+}
 
-  .circle-1 {
-    width: 1000px;
-    height: 1000px;
-  }
-
-  .circle-2 {
-    width: 800px;
-    height: 800px;
-  }
-
-  .circle-3 {
-    width: 600px;
-    height: 600px;
-  }
+/* Remove old styles */
+.floating-circle,
+.circle-1,
+.circle-2,
+.circle-3 {
+  display: none;
 }
