@@ -30,6 +30,21 @@ body {
   z-index: -2;
 }
 
+.background-grid {
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.03) 0px,
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px,
+    transparent 10px
+  );
+  animation: patternMove 20s linear infinite;
+  opacity: 0.5;
+  z-index: -1;
+}
+
 .accent-circle {
   position: fixed;
   width: 1200px;
@@ -55,6 +70,22 @@ body {
   }
 }
 
+@keyframes patternMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
 html {
   scroll-behavior: smooth;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding-top: 60px;
 }

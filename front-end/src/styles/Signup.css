@@ -11,8 +11,7 @@
 
 /* Main Container and Background */
 .register-container {
-  min-height: calc(100vh - 60px);
-  margin-top: 60px;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
