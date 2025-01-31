@@ -6,12 +6,12 @@ import Login from "./pages/Login";
 import NavBar from "./components/Navbar";
 import "./styles/global.css";
 import Cart from "./pages/Cart";
-
 const App = () => {
   return (
     <BrowserRouter>
       <div className="background-wrapper">
         <div className="gradient-background"></div>
+        <div className="background-grid"></div>
         <div className="accent-circle"></div>
 
         <NavBar />

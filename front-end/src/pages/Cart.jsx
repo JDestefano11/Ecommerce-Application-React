@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { FiMinus, FiPlus, FiTrash2 } from "react-icons/fi";
-import { toast } from "react-hot-toast";
 import "../styles/Cart.css";
 
 const Cart = () => {

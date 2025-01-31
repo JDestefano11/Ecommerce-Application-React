@@ -1,24 +1,18 @@
+:root {
+  --gradient-primary: linear-gradient(45deg, #9b66fc, #02b8a8);
+  --gradient-secondary: linear-gradient(135deg, #0f1115, #181b22);
+  --gradient-accent: linear-gradient(225deg, #9b66fc30, #02b8a830);
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #2c3e50;
+  background: #13151a;
   color: #ffffff;
   height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
-}
-
-:root {
-  --gradient-primary: linear-gradient(45deg, #8b5fd3, #027b71);
-  --gradient-secondary: linear-gradient(135deg, #6b3fa8, #01574f);
-  --gradient-accent: linear-gradient(225deg, #a782e8, #03dac6);
-  --gradient-background: radial-gradient(
-    circle at center,
-    #1c1c1c,
-    #161616,
-    #111111
-  );
 }
 
 .background-wrapper {
@@ -31,30 +25,37 @@ body {
 .gradient-background {
   position: fixed;
   inset: 0;
-  background: var(--gradient-background);
+  background: radial-gradient(circle at 0% 0%, #bb86fc12 0%, transparent 45%),
+    radial-gradient(circle at 100% 100%, #03dac612 0%, transparent 45%),
+    linear-gradient(to bottom right, #0a0b0f, #151820);
   z-index: -2;
 }
 
 .accent-circle {
   position: fixed;
-  width: 900px;
-  height: 900px;
+  width: 1200px;
+  height: 1200px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: var(--gradient-accent);
+  background: linear-gradient(225deg, #bb86fc60, #03dac660);
   border-radius: 50%;
-  filter: blur(150px);
-  opacity: 0.06;
+  filter: blur(120px);
+  opacity: 0.15;
   z-index: -1;
+  animation: pulse 15s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
 }
 
 html {
   scroll-behavior: smooth;
-}
-
-@media (max-width: 768px) {
-  body {
-    font-size: 16px;
-  }
 }
