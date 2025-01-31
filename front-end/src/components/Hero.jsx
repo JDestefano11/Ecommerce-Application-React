@@ -27,6 +27,15 @@ const Hero = () => {
 
   return (
     <section className="hero-container">
+      <div className="hero-background">
+        <div className="hero-shapes">
+          <div className="hero-shape hero-shape-1"></div>
+          <div className="hero-shape hero-shape-2"></div>
+          <div className="hero-shape hero-shape-3"></div>
+        </div>
+        <div className="hero-pattern"></div>
+      </div>
+
       <div className="hero-content">
         <div className="hero-left">
           <div className="floating-elements">
