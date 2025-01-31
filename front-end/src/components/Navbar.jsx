@@ -1,195 +1,138 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { 
-  faShoppingCart, 
-  faSearch, 
-  faHeart, 
-  faUser,
+import {
   faBars,
-  faTimes 
+  faTimes,
+  faShoppingCart,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Navbar.css";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  
-
-  const isLoggedIn = false;
-  const isAdmin = false;
-
-  const handleScroll = useCallback(() => {
-    const currentScrollY = window.scrollY;
-    if (currentScrollY > 20) {
-      if (!scrolled) setScrolled(true);
-    } else {
-      if (scrolled) setScrolled(false);
-    }
-  }, [scrolled]);
+  const isAdmin = true;
 
   useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      if (offset > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
       }
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [handleScroll]);
-
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      document.body.style.overflow = 'unset';
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [menuOpen]);
+  }, []);
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
-
-  const handleLogout = () => {
-    // Add your logout logic here
-    closeMenu();
-  };
-
-  const renderAuthButtons = () => {
-    if (isLoggedIn) {
-      return (
-        <div className="auth-buttons">
-          <Link to="/account" className="icon-button" onClick={closeMenu}>
-            <FontAwesomeIcon icon={faUser} />
-          </Link>
-          <button className="navbar-button" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
-      );
-    }
-    return (
-      <div className="auth-buttons">
-        <Link to="/login" className="navbar-button" onClick={closeMenu}>
-          Login
-        </Link>
-        <Link to="/signup" className="navbar-button signup" onClick={closeMenu}>
-          Sign Up
-        </Link>
-      </div>
-    );
+    setMenuOpen((prevState) => !prevState);
   };
 
   return (
-    <header className={`navbar-container ${scrolled ? 'scrolled' : ''} ${menuOpen ? 'menu-open' : ''}`}>
-      <div className="navbar-announcement">
-        Free Worldwide Shipping on Orders Over $200
-      </div>
-      
+    <header className={`navbar-container ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-wrapper">
-        <Link to="/" className="navbar-brand" onClick={closeMenu}>
-          NOVA<span className="brand-accent">LUXE</span>
+        <Link to="/" className="navbar-brand">
+          NovaCart
         </Link>
 
-        <nav className="navbar-center">
+        <div className="navbar-center">
           <Link to="/" className="navbar-link">
             Home
           </Link>
-          <Link to="/collections" className="navbar-link">
-            Collections
-          </Link>
-          <Link to="/new-arrivals" className="navbar-link">
-            New Arrivals
-          </Link>
-          <Link to="/about" className="navbar-link">
-            About
-          </Link>
-          <Link to="/contact" className="navbar-link">
-            Contact
-          </Link>
-          {isLoggedIn && isAdmin && (
-            <Link to="/admin" className="navbar-link admin-link">
+          {isAdmin && (
+            <Link to="/admin" className="navbar-link">
               Admin
             </Link>
           )}
-        </nav>
+        </div>
 
         <div className="navbar-right">
-          <button className="icon-button">
-            <FontAwesomeIcon icon={faSearch} />
-          </button>
-          {isLoggedIn && (
+          {user && (
+            <Link to="/cart" className="cart-link">
+              <FontAwesomeIcon icon={faShoppingCart} />
+              <span className="cart-badge">3</span>
+            </Link>
+          )}
+          {user ? (
+            <button className="navbar-button">Log Out</button>
+          ) : (
             <>
-              <Link to="/wishlist" className="icon-button">
-                <FontAwesomeIcon icon={faHeart} />
+              <Link to="/login" className="navbar-button">
+                Login
               </Link>
-              <Link to="/cart" className="icon-button cart-link" onClick={closeMenu}>
-                <FontAwesomeIcon icon={faShoppingCart} />
-                <span className="cart-badge">3</span>
+              <Link to="/signup" className="navbar-button">
+                Sign Up
               </Link>
             </>
           )}
-          {renderAuthButtons()}
         </div>
 
         <div className="mobile-icons">
-          <Link to="/search" className="icon-button">
-            <FontAwesomeIcon icon={faSearch} />
-          </Link>
-          <Link to="/cart" className="icon-button cart-link">
-            <FontAwesomeIcon icon={faShoppingCart} />
-            <span className="cart-badge">3</span>
-          </Link>
-          <button 
-            className={`navbar-menu-icon ${menuOpen ? 'open' : ''}`} 
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-          >
+          {user && (
+            <Link to="/cart" className="cart-link">
+              <FontAwesomeIcon icon={faShoppingCart} />
+              <span className="cart-badge">3</span>
+            </Link>
+          )}
+          <button className="navbar-menu-icon" onClick={toggleMenu}>
             <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
           </button>
         </div>
       </div>
 
       <nav className={`navbar-links ${menuOpen ? "open" : ""}`}>
-        <div className="mobile-menu-content">
-          <div className="menu-links">
-            <Link to="/" className="navbar-link" onClick={closeMenu}>
-              Home
+        <div className="menu-links">
+          <Link
+            to="/"
+            className="navbar-link"
+            onClick={() => setMenuOpen(false)}
+          >
+            Home
+          </Link>
+          {isAdmin && (
+            <Link
+              to="/admin"
+              className="navbar-link"
+              onClick={() => setMenuOpen(false)}
+            >
+              Admin
             </Link>
-            <Link to="/collections" className="navbar-link" onClick={closeMenu}>
-              Collections
-            </Link>
-            <Link to="/new-arrivals" className="navbar-link" onClick={closeMenu}>
-              New Arrivals
-            </Link>
-            <Link to="/about" className="navbar-link" onClick={closeMenu}>
-              About
-            </Link>
-            <Link to="/contact" className="navbar-link" onClick={closeMenu}>
-              Contact
-            </Link>
-            {isLoggedIn && isAdmin && (
-              <Link to="/admin" className="navbar-link admin-link" onClick={closeMenu}>
-                Admin
+          )}
+        </div>
+
+        <div className="mobile-auth">
+          {user ? (
+            <button
+              className="navbar-button"
+              onClick={() => setMenuOpen(false)}
+            >
+              Log Out
+            </button>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="navbar-button"
+                onClick={() => setMenuOpen(false)}
+              >
+                Login
               </Link>
-            )}
-          </div>
-          <div className="mobile-auth">
-            {renderAuthButtons()}
-          </div>
+              <Link
+                to="/signup"
+                className="navbar-button"
+                onClick={() => setMenuOpen(false)}
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </header>
