@@ -1,24 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap');
+
+:root {
+  --font-hero: 'Gilda Display', serif;
+}
+
 .hero-container {
   position: relative;
   min-height: 100vh;
   padding-top: 80px;
   background: linear-gradient(
-    125deg,
+    135deg,
     #0B0C10 0%,
-    #1a1b2e 25%,
-    #1F2937 50%,
-    #1a1b2e 75%,
+    #1a1b2e 50%,
     #0B0C10 100%
   );
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
   overflow: hidden;
+  font-family: var(--font-body);
 }
 
 .hero-content {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 120px 24px;
+  padding: 80px 24px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 64px;
@@ -30,6 +33,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
 }
 
 .floating-elements {
@@ -46,9 +50,13 @@
   border: 1px solid rgba(187, 134, 252, 0.3);
   padding: 12px 24px;
   border-radius: 100px;
-  font-size: 14px;
+  font-size: 0.9rem;
   color: #BB86FC;
   animation: float 3s ease-in-out infinite;
+  backdrop-filter: blur(10px);
+  font-family: var(--font-body);
+  letter-spacing: 0.15em;
+  font-weight: 300;
 }
 
 .badge-icon {
@@ -72,6 +80,11 @@
   padding: 12px 24px;
   border-radius: 16px;
   animation: float 3s ease-in-out infinite 1.5s;
+  backdrop-filter: blur(10px);
+  font-family: var(--font-body);
+  letter-spacing: 0.15em;
+  font-weight: 300;
+  font-size: 0.9rem;
 }
 
 .card-icon {
@@ -84,6 +97,7 @@
 .card-icon svg {
   width: 24px;
   height: 24px;
+  color: #03DAC6;
 }
 
 .card-text {
@@ -98,13 +112,17 @@
 }
 
 .hero-title {
-  font-size: clamp(3rem, 5vw, 4.5rem);
-  line-height: 1.1;
-  margin-bottom: 24px;
-  color: white;
+  font-family: var(--font-hero);
+  font-size: clamp(4.5rem, 9vw, 6.5rem);
+  line-height: 0.85;
+  margin-bottom: 40px;
+  color: var(--text-primary);
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  letter-spacing: 0.15em;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 
 .hero-title.animate-in {
@@ -114,19 +132,27 @@
 
 .gradient-text {
   display: block;
-  background: linear-gradient(45deg, #BB86FC, #03DAC6);
+  font-family: var(--font-hero);
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% 200%;
   animation: gradient 8s ease infinite;
+  font-size: 0.7em;
+  margin-top: 20px;
+  letter-spacing: 0.25em;
+  font-style: italic;
 }
 
 .hero-description {
-  font-size: 1.125rem;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.8);
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  line-height: 1.3;
+  color: var(--text-secondary);
   margin-bottom: 48px;
   max-width: 540px;
+  font-weight: 200;
+  letter-spacing: 0.03em;
 }
 
 .cta-group {
@@ -137,16 +163,20 @@
 
 .cta-primary {
   position: relative;
-  padding: 16px 32px;
+  padding: 16px 36px;
   background: linear-gradient(45deg, #BB86FC, #03DAC6);
   border: none;
   border-radius: 12px;
-  color: white;
+  color: #0B0C10;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   overflow: hidden;
   transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-family: var(--font-body);
+  font-weight: 300;
 }
 
 .cta-primary:hover {
@@ -184,19 +214,23 @@
 
 .cta-secondary {
   position: relative;
-  padding: 16px 32px;
+  padding: 16px 36px;
   background: transparent;
   border: none;
   border-radius: 12px;
   color: #03DAC6;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   transition: all 0.3s ease;
   overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-family: var(--font-body);
+  font-weight: 300;
 }
 
 .button-border {
@@ -217,10 +251,6 @@
   transform: translateY(-2px);
 }
 
-.cta-secondary:active {
-  transform: translateY(0);
-}
-
 .arrow-icon {
   width: 20px;
   height: 20px;
@@ -238,26 +268,42 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
+  margin-top: 48px;
 }
 
 .achievement-item {
   text-align: center;
+  padding: 32px 24px;
+  background: rgba(26, 27, 46, 0.5);
+  border-radius: 20px;
+  border: 1px solid rgba(187, 134, 252, 0.1);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.achievement-item:hover {
+  transform: translateY(-5px);
+  border-color: rgba(187, 134, 252, 0.3);
 }
 
 .achievement-value {
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: linear-gradient(45deg, #BB86FC, #03DAC6);
+  font-family: var(--font-hero);
+  font-size: 4rem;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  letter-spacing: 0.1em;
+  line-height: 0.85;
 }
 
 .achievement-label {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.875rem;
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.2em;
+  font-weight: 300;
 }
 
 .hero-right {
@@ -269,7 +315,7 @@
 .visual-container {
   position: relative;
   width: 100%;
-  aspect-ratio: 4/5;
+  aspect-ratio: 3/4;
 }
 
 .geometric-shapes {
@@ -281,7 +327,8 @@
 .shape {
   position: absolute;
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  background: linear-gradient(45deg, #BB86FC33, #03DAC633);
+  background: linear-gradient(45deg, rgba(187, 134, 252, 0.15), rgba(3, 218, 198, 0.15));
+  filter: blur(3px);
 }
 
 .shape-1 {
@@ -316,13 +363,22 @@
   border-radius: 30px;
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: perspective(1000px) rotateY(-5deg) translateZ(0);
+  transition: transform 0.6s ease;
+  will-change: transform;
+}
+
+.image-wrapper:hover {
+  transform: perspective(1000px) rotateY(0deg) translateZ(0);
 }
 
 .hero-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.6s ease;
+  filter: brightness(0.95) contrast(1.1);
+  will-change: transform;
 }
 
 .image-wrapper:hover .hero-image {
@@ -405,299 +461,35 @@
   }
 }
 
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Mobile Small (320px - 467px) */
-@media (max-width: 467px) {
-  .hero-container {
-    padding-top: 100px;
-  }
+@media (max-width: 768px) {
   .hero-content {
     grid-template-columns: 1fr;
-    padding: 24px 16px;
-    gap: 32px;
+    padding: 40px 24px;
   }
 
-  .hero-left {
-    order: 2;
-    text-align: center;
-    padding: 0;
-  }
-
-  .floating-elements {
-    justify-content: center;
-    margin-bottom: 24px;
+  .hero-right {
+    order: -1;
   }
 
   .hero-title {
-    font-size: 2.25rem;
-    margin-bottom: 16px;
-  }
-
-  .hero-description {
-    font-size: 1rem;
-    margin-bottom: 32px;
-    padding: 0 8px;
-  }
-
-  .cta-group {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
-    margin-bottom: 40px;
-  }
-
-  .cta-primary,
-  .cta-secondary {
-    padding: 14px 24px;
-    justify-content: center;
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
   }
 
   .achievement-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 0 16px;
-  }
-
-  .achievement-value {
-    font-size: 1.75rem;
-  }
-
-  .achievement-label {
-    font-size: 0.75rem;
-  }
-
-  .hero-right {
-    order: 1;
-    margin: 0 -16px;
-  }
-
-  .visual-container {
-    aspect-ratio: 16/9;
-  }
-
-  .image-wrapper {
-    border-radius: 0;
-  }
-
-  .shape-1 {
-    width: 150px;
-    height: 150px;
-  }
-
-  .shape-2 {
-    width: 100px;
-    height: 100px;
-  }
-
-  .shape-3 {
-    width: 75px;
-    height: 75px;
   }
 }
 
-/* Mobile Large (468px - 767px) */
-@media (min-width: 468px) and (max-width: 767px) {
-  .hero-container {
-    padding-top: 100px;
-  }
-  .hero-content {
-    grid-template-columns: 1fr;
-    padding: 32px 24px;
-    gap: 40px;
-  }
-
-  .hero-left {
-    order: 2;
-    text-align: center;
-    padding: 0 16px;
-  }
-
+@media (max-width: 480px) {
   .floating-elements {
-    justify-content: center;
-    margin-bottom: 32px;
-  }
-
-  .hero-title {
-    font-size: 2.75rem;
-    margin-bottom: 20px;
-  }
-
-  .hero-description {
-    font-size: 1.1rem;
-    margin-bottom: 36px;
-    max-width: 440px;
-    margin-left: auto;
-    margin-right: auto;
+    flex-direction: column;
   }
 
   .cta-group {
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 48px;
+    flex-direction: column;
   }
 
   .achievement-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
-  .achievement-value {
-    font-size: 2rem;
-  }
-
-  .achievement-label {
-    font-size: 0.8rem;
-  }
-
-  .hero-right {
-    order: 1;
-    margin: 0 -24px;
-  }
-
-  .visual-container {
-    aspect-ratio: 16/9;
-  }
-
-  .image-wrapper {
-    border-radius: 0;
-  }
-
-  .shape-1 {
-    width: 200px;
-    height: 200px;
-  }
-
-  .shape-2 {
-    width: 150px;
-    height: 150px;
-  }
-
-  .shape-3 {
-    width: 100px;
-    height: 100px;
-  }
-}
-
-/* Tablet (768px - 991px) */
-@media (min-width: 768px) and (max-width: 991px) {
-  .hero-container {
-    padding-top: 120px;
-  }
-  .hero-content {
     grid-template-columns: 1fr;
-    max-width: 720px;
-    padding: 48px 32px;
-    gap: 48px;
-    margin: 0 auto;
-  }
-
-  .hero-left {
-    order: 2;
-    text-align: center;
-    padding: 0 24px;
-  }
-
-  .floating-elements {
-    justify-content: center;
-    margin-bottom: 40px;
-  }
-
-  .floating-badge,
-  .floating-card {
-    transform: scale(1.1);
-  }
-
-  .hero-title {
-    font-size: 3.5rem;
-    margin-bottom: 24px;
-  }
-
-  .hero-description {
-    font-size: 1.25rem;
-    margin-bottom: 40px;
-    max-width: 560px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .cta-group {
-    flex-direction: row;
-    justify-content: center;
-    gap: 24px;
-    margin-bottom: 56px;
-  }
-
-  .cta-primary,
-  .cta-secondary {
-    padding: 16px 36px;
-    font-size: 1.1rem;
-  }
-
-  .achievement-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .achievement-value {
-    font-size: 2.25rem;
-  }
-
-  .achievement-label {
-    font-size: 0.875rem;
-  }
-
-  .hero-right {
-    order: 1;
-    margin: 0 -32px;
-  }
-
-  .visual-container {
-    aspect-ratio: 21/9;
-  }
-
-  .image-wrapper {
-    border-radius: 0;
-  }
-
-  .shape-1 {
-    width: 250px;
-    height: 250px;
-  }
-
-  .shape-2 {
-    width: 200px;
-    height: 200px;
-  }
-
-  .shape-3 {
-    width: 150px;
-    height: 150px;
-  }
-
-  .gradient-orb {
-    opacity: 0.15;
-  }
-}
-
-/* Desktop Small (992px - 1199px) */
-@media (min-width: 992px) {
-  .hero-content {
-    padding: 120px 48px;
   }
 }

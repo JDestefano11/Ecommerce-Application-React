@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart, faSearch, faHeart, faUser } from "@fortawesome/free-solid-svg-icons";
+import { 
+  faShoppingCart, 
+  faSearch, 
+  faHeart, 
+  faUser,
+  faBars,
+  faTimes 
+} from "@fortawesome/free-solid-svg-icons";
 import "../styles/Navbar.css";
 
 const Navbar = () => {
@@ -139,54 +146,50 @@ const Navbar = () => {
         </div>
 
         <div className="mobile-icons">
-          <button className="icon-button">
+          <Link to="/search" className="icon-button">
             <FontAwesomeIcon icon={faSearch} />
-          </button>
-          {isLoggedIn && (
-            <Link to="/cart" className="icon-button cart-link" onClick={closeMenu}>
-              <FontAwesomeIcon icon={faShoppingCart} />
-              <span className="cart-badge">3</span>
-            </Link>
-          )}
+          </Link>
+          <Link to="/cart" className="icon-button cart-link">
+            <FontAwesomeIcon icon={faShoppingCart} />
+            <span className="cart-badge">3</span>
+          </Link>
           <button 
             className={`navbar-menu-icon ${menuOpen ? 'open' : ''}`} 
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
-            <div className="menu-icon-wrapper">
-              <div className="menu-icon-inner">
-                <span className="menu-icon-line"></span>
-                <span className="menu-icon-line"></span>
-                <span className="menu-icon-dot"></span>
-              </div>
-            </div>
+            <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
           </button>
         </div>
       </div>
 
       <nav className={`navbar-links ${menuOpen ? "open" : ""}`}>
-        <Link to="/" className="navbar-link" onClick={closeMenu} style={{"--i": 1}}>
-          Home
-        </Link>
-        <Link to="/collections" className="navbar-link" onClick={closeMenu} style={{"--i": 2}}>
-          Collections
-        </Link>
-        <Link to="/new-arrivals" className="navbar-link" onClick={closeMenu} style={{"--i": 3}}>
-          New Arrivals
-        </Link>
-        <Link to="/about" className="navbar-link" onClick={closeMenu} style={{"--i": 4}}>
-          About
-        </Link>
-        <Link to="/contact" className="navbar-link" onClick={closeMenu} style={{"--i": 5}}>
-          Contact
-        </Link>
-        {isLoggedIn && isAdmin && (
-          <Link to="/admin" className="navbar-link admin-link" onClick={closeMenu} style={{"--i": 6}}>
-            Admin
-          </Link>
-        )}
-        <div className="mobile-auth" style={{"--i": 7}}>
-          {renderAuthButtons()}
+        <div className="mobile-menu-content">
+          <div className="menu-links">
+            <Link to="/" className="navbar-link" onClick={closeMenu}>
+              Home
+            </Link>
+            <Link to="/collections" className="navbar-link" onClick={closeMenu}>
+              Collections
+            </Link>
+            <Link to="/new-arrivals" className="navbar-link" onClick={closeMenu}>
+              New Arrivals
+            </Link>
+            <Link to="/about" className="navbar-link" onClick={closeMenu}>
+              About
+            </Link>
+            <Link to="/contact" className="navbar-link" onClick={closeMenu}>
+              Contact
+            </Link>
+            {isLoggedIn && isAdmin && (
+              <Link to="/admin" className="navbar-link admin-link" onClick={closeMenu}>
+                Admin
+              </Link>
+            )}
+          </div>
+          <div className="mobile-auth">
+            {renderAuthButtons()}
+          </div>
         </div>
       </nav>
     </header>
