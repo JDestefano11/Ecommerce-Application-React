@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiMail, FiLock, FiUser, FiArrowRight, FiAlertCircle } from "react-icons/fi";
+import {
+  FiMail,
+  FiLock,
+  FiUser,
+  FiArrowRight,
+  FiAlertCircle,
+} from "react-icons/fi";
 import "../styles/Signup.css";
 
 const Signup = () => {
@@ -26,7 +32,12 @@ const Signup = () => {
     e.preventDefault();
     setError(null);
 
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
       setError("Please fill in all fields");
       return;
     }
@@ -39,9 +50,9 @@ const Signup = () => {
     try {
       setIsLoading(true);
       // API call simulation
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log("Signup successful");
-      navigate("/dashboard");
+      navigate("/login");
     } catch (err) {
       setError("Failed to create account");
     } finally {
@@ -140,8 +151,8 @@ const Signup = () => {
               </div>
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="register-button"
               disabled={isLoading}
             >
@@ -157,7 +168,9 @@ const Signup = () => {
 
             <div className="register-footer">
               <p>Already have an account?</p>
-              <a href="/login" className="register-link">Sign In</a>
+              <a href="/login" className="register-link">
+                Sign In
+              </a>
             </div>
           </form>
         </div>
