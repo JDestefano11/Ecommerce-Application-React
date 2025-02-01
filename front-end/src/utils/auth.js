@@ -4,6 +4,7 @@ export const logout = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+       
         'Accept': 'application/json'
       },
       mode: 'cors',

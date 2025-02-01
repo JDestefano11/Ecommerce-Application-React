@@ -8,6 +8,7 @@ import {
   FiAlertCircle,
 } from "react-icons/fi";
 import "../styles/Signup.css";
+import { useAuth } from "../context/AuthContext";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ const Signup = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
@@ -49,31 +51,57 @@ const Signup = () => {
 
     try {
       setIsLoading(true);
-      const response = await fetch('http://localhost:5000/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password
-        }),
-        mode: 'cors',
-        credentials: 'include'
-      });
-
-      const data = await response.json();
       
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to create account');
-      }
+      // Detailed network error handling
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10-second timeout
 
-      console.log("Signup successful");
-      navigate("/login");
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            password: formData.password
+          }),
+          mode: 'cors',
+          credentials: 'include',
+          signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.message || 'Signup failed');
+        }
+
+        login(data);
+
+        console.log("Signup successful");
+        navigate("/login");
+      } catch (fetchError) {
+        clearTimeout(timeoutId);
+        
+        // Detailed error logging and user feedback
+        if (fetchError.name === 'AbortError') {
+          setError("Request timed out. Please check your internet connection.");
+        } else if (fetchError.message.includes('Failed to fetch')) {
+          setError("Unable to connect to the server. Please check your network connection.");
+        } else {
+          setError(fetchError.message || "An unexpected error occurred");
+        }
+        
+        console.error("Signup error:", fetchError);
+      }
     } catch (err) {
-      setError(err.message || "Failed to create account");
+      setError("An unexpected error occurred");
+      console.error("Unexpected error:", err);
     } finally {
       setIsLoading(false);
     }

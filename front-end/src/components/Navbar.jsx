@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -8,12 +8,14 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Navbar.css";
+import { useAuth } from "../context/AuthContext";  
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [user, setUser] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const isAdmin = true;
+  const { user, logout } = useAuth();  
+  const navigate = useNavigate();
+  const isAdmin = user && user.role === 'admin';  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,6 +35,13 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setMenuOpen((prevState) => !prevState);
+  };
+
+  const handleLogout = async () => {
+    const success = await logout();
+    if (success) {
+      navigate('/login');
+    }
   };
 
   return (
@@ -61,7 +70,12 @@ const Navbar = () => {
             </Link>
           )}
           {user ? (
-            <button className="navbar-button">Log Out</button>
+            <button 
+              className="navbar-button" 
+              onClick={handleLogout}
+            >
+              Log Out
+            </button>
           ) : (
             <>
               <Link to="/login" className="navbar-button">
@@ -109,9 +123,9 @@ const Navbar = () => {
 
         <div className="mobile-auth">
           {user ? (
-            <button
-              className="navbar-button"
-              onClick={() => setMenuOpen(false)}
+            <button 
+              className="navbar-button" 
+              onClick={handleLogout}
             >
               Log Out
             </button>
