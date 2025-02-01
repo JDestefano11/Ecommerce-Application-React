@@ -49,12 +49,31 @@ const Signup = () => {
 
     try {
       setIsLoading(true);
-      // API call simulation
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch('http://localhost:5000/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password
+        }),
+        mode: 'cors',
+        credentials: 'include'
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to create account');
+      }
+
       console.log("Signup successful");
       navigate("/login");
     } catch (err) {
-      setError("Failed to create account");
+      setError(err.message || "Failed to create account");
     } finally {
       setIsLoading(false);
     }

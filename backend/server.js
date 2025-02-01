@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path";
+import cors from "cors";
 
 import authRoutes from "./routes/auth.route.js";
 import productRoutes from "./routes/product.route.js";
@@ -18,6 +19,27 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 const __dirname = path.resolve();
+
+// Comprehensive CORS configuration
+app.use(cors({
+  origin: [
+    'http://localhost:3000',   // React default port
+    'http://127.0.0.1:3000',   // localhost variant
+    'http://localhost:5173',   // Vite default port
+    'http://127.0.0.1:5173',   // Vite localhost variant
+    'http://localhost:5174',   // Another Vite port
+    'http://127.0.0.1:5174'    // Another Vite localhost variant
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'Access-Control-Allow-Methods', 
+    'Access-Control-Allow-Origin', 
+    'Access-Control-Allow-Headers'
+  ],
+  credentials: true
+}));
 
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());

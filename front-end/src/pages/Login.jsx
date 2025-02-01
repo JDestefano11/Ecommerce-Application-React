@@ -31,12 +31,30 @@ const Login = () => {
 
     try {
       setIsLoading(true);
-      // API call simulation
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        }),
+        mode: 'cors',
+        credentials: 'include'
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Invalid email or password');
+      }
+
       console.log("Login successful");
       navigate("/dashboard");
     } catch (err) {
-      setError("Invalid email or password");
+      setError(err.message || "Invalid email or password");
     } finally {
       setIsLoading(false);
     }
